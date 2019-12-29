@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>number place</title>
+    <link rel="stylesheet" type="text/css" href="../static/board.css" th:href="@{/board.css}"/>
+</head>
+<body>
+<div class="back-ground">
+    <h1>number place</h1>
+    <form action="number-place.html" th:action="@{3x3}" th:method="post" th:object="${form}">
+        <table class="board">
+            <tr th:each="row, x : *{board}">
+                <th:block th:each="column, y : ${row}">
+                    <td class="cell"
+                        th:classappend="${(x.index % 3 == 2 ? 'thick-bottom' : '')  + ' ' + (y.index % 3 == 2 ? 'thick-right' : '')}">
+                        <label>
+                            <input maxlength="1" type="text" th:field="*{board[__${x.index}__][__${y.index}__]}">
+                        </label>
+                    </td>
+                </th:block>
+            </tr>
+        </table>
+        <p></p>
+        <div class="buttons">
+            <input class="btn-sticky" type="submit" name="help" value="help">
+            <input class="btn-sticky" type="submit" name="" value="save">
+            <input class="btn-sticky" type="submit" name="re:start" value="re:start">
+        </div>
+    </form>
+</div>
+</body>
+</html>

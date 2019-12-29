@@ -1,0 +1,61 @@
+h1 {
+    color: #7b6459;
+}
+
+div.back-ground {
+    background-color: azure;
+    text-align: center;
+    width: 500px;
+    height: 580px;
+    margin: 0 auto;
+    padding: 3px;
+}
+
+div.buttons {
+    margin-top: 10px;
+}
+
+table.board {
+    border: darkolivegreen 3px solid;
+    border-collapse: collapse;
+    background-color: azure;
+    margin: 0 auto;
+}
+
+td.cell {
+    border: darkolivegreen 1px solid;
+    text-align: center;
+    width: 40px;
+    height: 40px;
+}
+
+td.thick-right {
+    border-right: darkolivegreen 2px solid;
+}
+
+td.thick-bottom {
+    border-bottom: darkolivegreen 2px solid;
+}
+
+input[type="text"] {
+    font-size: x-large;
+    text-align: center;
+    width: 35px;
+    height: 35px;
+}
+
+.btn-sticky {
+    color: #7b6459;
+    background: #f7f7f7;
+    font-size: medium;
+    font-weight: bold;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.29);
+    width: 120px;
+    padding: 0.5em 1em;
+    margin: 8px;
+}
+
+.btn-sticky:active {
+    box-shadow: inset 0 0 2px rgba(128, 128, 128, 0.1);
+    transform: translateY(2px);
+}
