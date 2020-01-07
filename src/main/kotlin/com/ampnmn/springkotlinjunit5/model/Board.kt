@@ -1,18 +1,13 @@
 package com.ampnmn.springkotlinjunit5.model
 
-class Board2x2() : Board(Type.TWO_BY_TWO)
-class Board3x3() : Board(Type.THREE_BY_THREE)
-class Board4x4() : Board(Type.FOUR_BY_FOUR)
-class Board5x5() : Board(Type.FIVE_BY_FIVE)
-
 /**
  * Board
  */
-abstract class Board(type: Type) {
+abstract class Board(boardType: BoardType) {
     private val cells: MutableList<Cell> = mutableListOf()
-    private val size = type.size
-    private val maxNumber = type.maxNumber
-    private val boxTopIndexes = type.boxTopIndexes()
+    private val size = boardType.size
+    private val maxNumber = boardType.maxNumber
+    private val boxTopIndexes = boardType.boxTopIndexes()
 
     /**
      * Access to cell with Board[x, y]

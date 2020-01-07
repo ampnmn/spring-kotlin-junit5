@@ -1,7 +1,8 @@
 package com.ampnmn.springkotlinjunit5.controller
 
 import com.ampnmn.springkotlinjunit5.controller.form.Board3x3Form
-import com.ampnmn.springkotlinjunit5.model.Board3x3
+import com.ampnmn.springkotlinjunit5.model.Board
+import com.ampnmn.springkotlinjunit5.model.BoardType
 import com.ampnmn.springkotlinjunit5.model.ZipStreamingResponseBody
 import org.springframework.core.io.ResourceLoader
 import org.springframework.http.HttpHeaders
@@ -23,31 +24,32 @@ class Board3x3Controller(
 ) {
     @GetMapping
     fun show(@ModelAttribute form: Board3x3Form, model: Model): String {
-        val data = arrayOf(
-                arrayOf(9, 2, 0, 0, 1, 0, 3, 0, 0),
-                arrayOf(8, 5, 0, 0, 9, 0, 0, 2, 0),
-                arrayOf(0, 0, 3, 0, 0, 0, 0, 0, 0),
+        model.addAttribute("form", form.also {
+            it.board = arrayOf(
+                    arrayOf(9, 2, 0, 0, 1, 0, 3, 0, 0),
+                    arrayOf(8, 5, 0, 0, 9, 0, 0, 2, 0),
+                    arrayOf(0, 0, 3, 0, 0, 0, 0, 0, 0),
 
-                arrayOf(0, 0, 0, 0, 0, 2, 0, 0, 0),
-                arrayOf(3, 0, 0, 0, 0, 1, 6, 0, 0),
-                arrayOf(1, 9, 7, 0, 0, 0, 2, 5, 0),
+                    arrayOf(0, 0, 0, 0, 0, 2, 0, 0, 0),
+                    arrayOf(3, 0, 0, 0, 0, 1, 6, 0, 0),
+                    arrayOf(1, 9, 7, 0, 0, 0, 2, 5, 0),
 
-                arrayOf(0, 0, 0, 5, 0, 9, 0, 6, 2),
-                arrayOf(0, 8, 5, 0, 2, 0, 4, 0, 0),
-                arrayOf(0, 0, 9, 7, 4, 0, 0, 3, 0)
-        )
-        form.board = data
-        model.addAttribute("form", form)
+                    arrayOf(0, 0, 0, 5, 0, 9, 0, 6, 2),
+                    arrayOf(0, 8, 5, 0, 2, 0, 4, 0, 0),
+                    arrayOf(0, 0, 9, 7, 4, 0, 0, 3, 0)
+            )
+        })
         return "number-place"
     }
 
     @PostMapping(params = ["help"])
     fun help(@ModelAttribute form: Board3x3Form, model: Model): String {
-        val board = Board3x3()
-        board.init(form.board)
-        board.fillAuto()
-
-        model.addAttribute("form", form.setBoard(board))
+        model.addAttribute("form", form.setBoard(
+                (object : Board(BoardType.THREE_BY_THREE) {}).also {
+                    it.init(form.board)
+                    it.fillAuto()
+                }
+        ))
         return "number-place"
     }
 
@@ -64,5 +66,5 @@ class Board3x3Controller(
     }
 
     @PostMapping(params = ["re:start"])
-    fun restart(@ModelAttribute form: Board3x3Form, model: Model) = "redirect:/3x3"
+    fun restart() = "redirect:/3x3"
 }

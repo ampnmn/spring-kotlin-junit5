@@ -11,7 +11,7 @@ internal class BoardTest {
 
     @Test
     fun isFilled() {
-        val notFilledBoard = Board3x3()
+        val notFilledBoard = object : Board(BoardType.THREE_BY_THREE) {}
         notFilledBoard.init(arrayOf(
                 arrayOf(1, 1, 1, 1, 1, 1, 1, 1, 1),
                 arrayOf(1, 1, 1, 1, 1, 1, 1, 1, 1),
@@ -27,7 +27,7 @@ internal class BoardTest {
         ))
         assertFalse(notFilledBoard.isFilled())
 
-        val filledBoard = Board3x3()
+        val filledBoard = object : Board(BoardType.THREE_BY_THREE) {}
         filledBoard.init(arrayOf(
                 arrayOf(1, 1, 1, 1, 1, 1, 1, 1, 1),
                 arrayOf(1, 1, 1, 1, 1, 1, 1, 1, 1),
@@ -46,7 +46,7 @@ internal class BoardTest {
 
     @Test
     fun fillAuto_3x3() {
-        val board = Board3x3()
+        val board = object : Board(BoardType.THREE_BY_THREE) {}
         board.init(arrayOf(
                 arrayOf(9, 2, 0, 0, 1, 0, 3, 0, 0),
                 arrayOf(8, 5, 0, 0, 9, 0, 0, 2, 0),
