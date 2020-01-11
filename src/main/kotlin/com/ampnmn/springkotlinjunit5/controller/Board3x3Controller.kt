@@ -3,7 +3,7 @@ package com.ampnmn.springkotlinjunit5.controller
 import com.ampnmn.springkotlinjunit5.controller.form.Board3x3Form
 import com.ampnmn.springkotlinjunit5.model.Board
 import com.ampnmn.springkotlinjunit5.model.BoardType
-import com.ampnmn.springkotlinjunit5.model.ZipStreamingResponseBody
+import com.ampnmn.springkotlinjunit5.model.SingleFileStreamingResponseBodyWriter
 import org.springframework.core.io.ResourceLoader
 import org.springframework.http.HttpHeaders
 import org.springframework.http.ResponseEntity
@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-
 
 @Controller
 @RequestMapping("3x3")
@@ -54,15 +54,16 @@ class Board3x3Controller(
     }
 
     @PostMapping(params = ["download"])
-    fun download(): ResponseEntity<ZipStreamingResponseBody> {
-
-        val timeStamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("uuuuMMddhhmmss"))
-        val downloadTextFile1 = resourceLoader.getResource("classpath:test1.txt").file
-        val downloadTextFile2 = resourceLoader.getResource("classpath:test2.txt").file
+    fun download(): ResponseEntity<StreamingResponseBody> {
+        val timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("uuuuMMddhhmmss"))
 
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=number-place_${timeStamp}.zip")
-                .body(ZipStreamingResponseBody(downloadTextFile1, downloadTextFile2))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=number-place_${timestamp}.txt")
+                .body(SingleFileStreamingResponseBodyWriter(listOf(
+                        "aaaaaaaaaaaaaaaaaa",
+                        "bbbbbbbbbbbbbbbbbb",
+                        "cccccccccccccccccc"
+                )))
     }
 
     @PostMapping(params = ["re:start"])
