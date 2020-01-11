@@ -54,16 +54,12 @@ class Board3x3Controller(
     }
 
     @PostMapping(params = ["download"])
-    fun download(): ResponseEntity<StreamingResponseBody> {
+    fun download(@ModelAttribute form: Board3x3Form): ResponseEntity<StreamingResponseBody> {
         val timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("uuuuMMddhhmmss"))
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=number-place_${timestamp}.txt")
-                .body(SingleFileStreamingResponseBodyWriter(listOf(
-                        "aaaaaaaaaaaaaaaaaa",
-                        "bbbbbbbbbbbbbbbbbb",
-                        "cccccccccccccccccc"
-                )))
+                .body(SingleFileStreamingResponseBodyWriter(form.toCsv()))
     }
 
     @PostMapping(params = ["re:start"])
