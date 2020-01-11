@@ -57,9 +57,9 @@ abstract class Board(boardType: BoardType) {
     }
 
     /**
-     * Get the cell index that is still empty
+     * cell index that is still empty
      */
-    private fun emptyCellIndices() = cells.filter { it.isEmpty }.map { it.cellIndex }
+    private val emptyCellIndices = { cells.filter { it.isEmpty }.map { it.cellIndex } }
 
     /**
      * Find suggestions
@@ -76,15 +76,17 @@ abstract class Board(boardType: BoardType) {
         )
     }
 
-    fun isFilled(): Boolean = cells.none { it.isEmpty }
+    val isFilled = { cells.none { it.isEmpty } }
 
-    private fun verticalCells(x: Int) = (1..maxNumber).map { y -> this[x, y].number }
+    private val verticalCells = { x: Int -> (1..maxNumber).map { y -> this[x, y].number } }
 
-    private fun horizontalCells(y: Int) = (1..maxNumber).map { x -> this[x, y].number }
+    private val horizontalCells = { y: Int -> (1..maxNumber).map { x -> this[x, y].number } }
 
-    private fun boxCells(x: Int, y: Int) = boxTopIndexes.last { it.x <= x && it.y <= y }.let { boxTop ->
-        (boxTop.x until boxTop.x + size).map { x ->
-            (boxTop.y until boxTop.y + size).map { y -> this[x, y].number }
-        }.flatten()
+    private val boxCells = { x: Int, y: Int ->
+        boxTopIndexes.last { it.x <= x && it.y <= y }.let { boxTop ->
+            (boxTop.x until boxTop.x + size).map { x ->
+                (boxTop.y until boxTop.y + size).map { y -> this[x, y].number }
+            }.flatten()
+        }
     }
 }
